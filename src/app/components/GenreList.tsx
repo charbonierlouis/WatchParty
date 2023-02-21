@@ -1,11 +1,11 @@
 import { Genre } from '../types/TvShow';
-import { getApiUrl } from '../utils';
+import { REVALIDATE, getApiUrl } from '../utils';
 import Genres from './Genres';
 
 async function GenreList() {
   const res = await fetch(getApiUrl('/genre/tv/list', false), {
     next: {
-      revalidate: 60,
+      revalidate: REVALIDATE.ONE_DAY,
     },
   });
 

@@ -5,14 +5,25 @@ import Recomendations from '@/app/components/Recomendations';
 import SaveToListButton from '@/app/components/SaveToListButton';
 import Seasons from '@/app/components/Seasons';
 import Similar from '@/app/components/Similars';
-import { TvShowDetails } from '@/app/types/TvShow';
+import { TvShow, TvShowDetails } from '@/app/types/TvShow';
 import TvProviders from '@/app/components/TvProvider';
-import { getApiUrl } from '@/app/utils';
+import { REVALIDATE, fetcher, getApiUrl } from '@/app/utils';
+import { List } from '@/app/types/Api';
 
 interface Props {
   params: {
     id: string;
   }
+}
+
+export const revalidate = REVALIDATE.ONE_DAY;
+
+export async function generateStaticParams() {
+  const { results }: List<TvShow> = await fetcher(getApiUrl('/discover/tv', false));
+
+  return results.map((show) => ({
+    id: show.id.toString(),
+  }));
 }
 
 async function TvPage({

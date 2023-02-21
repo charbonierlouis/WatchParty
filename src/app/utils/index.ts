@@ -27,3 +27,9 @@ export const getApiUrl = (
   url: string,
   withQueriesString: boolean,
 ) => `${process.env.API}${url}${withQueriesString ? '&' : '?'}api_key=${process.env.API_KEY}&language=fr`;
+
+export const REVALIDATE = {
+  ONE_MINUTE: 60,
+  ONE_HOUR: 60 * 60,
+  ONE_DAY: 60 * 60 * 24,
+};

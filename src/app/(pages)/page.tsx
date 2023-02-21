@@ -4,6 +4,9 @@ import Latest from '../components/Latests';
 import Populars from '../components/Populars';
 import SearchBar from '../components/SearchBar';
 import TopRated from '../components/TopRated';
+import { REVALIDATE } from '../utils';
+
+export const revalidate = REVALIDATE.ONE_DAY;
 
 function Homepage() {
   return (

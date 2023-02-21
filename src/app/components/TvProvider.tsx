@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Providers } from '../types/TvShow';
-import { getApiUrl } from '../utils';
+import { REVALIDATE, getApiUrl } from '../utils';
 
 interface Props {
   id: number
@@ -11,7 +11,7 @@ async function TvProviders({
 }: Props) {
   const res = await fetch(getApiUrl(`/tv/${id}/watch/providers`, false), {
     next: {
-      revalidate: 60,
+      revalidate: REVALIDATE.ONE_DAY,
     },
   });
   const { results: providers }: {

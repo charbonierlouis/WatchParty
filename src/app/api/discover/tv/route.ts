@@ -1,7 +1,7 @@
-import { getApiUrl } from '@/app/utils';
+import { REVALIDATE, getApiUrl } from '@/app/utils';
 import { NextResponse } from 'next/server';
 
-export const revalidate = 60;
+export const revalidate = REVALIDATE.ONE_DAY;
 
 // eslint-disable-next-line import/prefer-default-export
 export async function GET(request: Request) {

@@ -6,6 +6,7 @@ import { ReactNode, useState } from 'react';
 import { TvShow } from '../types/TvShow';
 import { List } from '../types/Api';
 import SimpleCard from './SimpleCard';
+import { REVALIDATE } from '../utils';
 
 interface Props {
   children?: ReactNode;
@@ -26,7 +27,7 @@ function SearchBar({
   const handleSubmit = async () => {
     const result = await fetch(`/api/search/tv/${value}`, {
       next: {
-        revalidate: 60,
+        revalidate: REVALIDATE.ONE_DAY,
       },
     });
     const data: List<TvShow> = await result.json();

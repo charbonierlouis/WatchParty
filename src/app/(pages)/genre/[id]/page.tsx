@@ -1,7 +1,7 @@
 import GenreScreen from '@/app/components/GenreScreen';
 import { List } from '@/app/types/Api';
 import { Genre, TvShow } from '@/app/types/TvShow';
-import { getApiUrl } from '@/app/utils';
+import { REVALIDATE, fetcher, getApiUrl } from '@/app/utils';
 
 interface Props {
   params: {
@@ -9,18 +9,30 @@ interface Props {
   }
 }
 
+export const revalidate = REVALIDATE.ONE_DAY;
+
+export async function generateStaticParams() {
+  const { genres }: {
+    genres: Genre[]
+  } = await fetcher(getApiUrl('/genre/tv/list', false));
+
+  return genres.map((genre) => ({
+    id: genre.id.toString(),
+  }));
+}
+
 async function GenrePage({
   params,
 }: Props) {
   const res = await fetch(getApiUrl(`/discover/tv?page=1&with_genres=${params.id}`, true), {
     next: {
-      revalidate: 60,
+      revalidate: REVALIDATE.ONE_DAY,
     },
   });
 
   const resList = await fetch(getApiUrl('/genre/tv/list', false), {
     next: {
-      revalidate: 60,
+      revalidate: REVALIDATE.ONE_DAY,
     },
   });
 

@@ -1,6 +1,6 @@
 import { List } from '../types/Api';
 import { TvShow } from '../types/TvShow';
-import { getApiUrl } from '../utils';
+import { REVALIDATE, getApiUrl } from '../utils';
 import TvList from './TvList';
 
 interface Props {
@@ -12,7 +12,7 @@ async function Similars({
 }: Props) {
   const res = await fetch(getApiUrl(`/tv/${id}/similar`, false), {
     next: {
-      revalidate: 60,
+      revalidate: REVALIDATE.ONE_DAY,
     },
   });
 

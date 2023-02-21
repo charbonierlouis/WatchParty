@@ -2,6 +2,9 @@
 
 import SimpleCard from '@/app/components/SimpleCard';
 import { useList } from '@/app/hooks/useList';
+import { REVALIDATE } from '@/app/utils';
+
+export const revalidate = REVALIDATE.ONE_DAY;
 
 function ListPage() {
   const { items } = useList();
