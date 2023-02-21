@@ -57,6 +57,7 @@ async function TvPage({
           <Genres
             items={item.genres}
           />
+          {/* @ts-expect-error Server Component */}
           <TvProviders
             id={Number(params.id)}
           />
@@ -67,10 +68,12 @@ async function TvPage({
         </div>
       </div>
       <div className="divider" />
+      {/* @ts-expect-error Server Component */}
       <Similar
         id={Number(params.id)}
       />
       <div className="divider" />
+      {/* @ts-expect-error Server Component */}
       <Recomendations
         id={Number(params.id)}
       />

@@ -9,10 +9,14 @@ function Homepage() {
   return (
     <div className="flex flex-col gap-5">
       <SearchBar>
+        {/* @ts-expect-error Server Component */}
         <GenreList />
       </SearchBar>
+      {/* @ts-expect-error Server Component */}
       <Latest />
+      {/* @ts-expect-error Server Component */}
       <Populars />
+      {/* @ts-expect-error Server Component */}
       <TopRated />
     </div>
   );

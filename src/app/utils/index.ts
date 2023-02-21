@@ -3,6 +3,7 @@ import { TvShow } from '../types/TvShow';
 const SAVED_TOKEN = 'saved';
 
 // eslint-disable-next-line import/prefer-default-export
+/* @ts-expect-error */
 export const fetcher = (...args: any[]) => fetch(...args).then((res) => res.json());
 
 export const getSavedTv = (): TvShow[] | null => {
