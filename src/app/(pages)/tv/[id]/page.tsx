@@ -9,6 +9,8 @@ import { TvShow, TvShowDetails } from '@/app/types/TvShow';
 import TvProviders from '@/app/components/TvProvider';
 import { REVALIDATE, getApiUrl } from '@/app/utils';
 import { getLatest, getPopulars, getTopRated } from '@/app/services';
+import { Suspense } from 'react';
+import TvListLoader from '@/app/loaders/TvListLoader';
 
 interface Props {
   params: {
@@ -62,6 +64,7 @@ async function TvPage({
                 width={250}
                 height={250}
                 className="w-full"
+                priority
               />
               <SaveToListButton
                 className="w-full flex justify-center gap-2"
@@ -92,16 +95,24 @@ async function TvPage({
           />
         </div>
       </div>
+
       <div className="divider" />
-      {/* @ts-expect-error Server Component */}
-      <Similar
-        id={Number(params.id)}
-      />
+
+      <Suspense fallback={<TvListLoader />}>
+        {/* @ts-expect-error Server Component */}
+        <Similar
+          id={Number(params.id)}
+        />
+      </Suspense>
+
       <div className="divider" />
-      {/* @ts-expect-error Server Component */}
-      <Recomendations
-        id={Number(params.id)}
-      />
+
+      <Suspense fallback={<TvListLoader />}>
+        {/* @ts-expect-error Server Component */}
+        <Recomendations
+          id={Number(params.id)}
+        />
+      </Suspense>
     </div>
   );
 }
