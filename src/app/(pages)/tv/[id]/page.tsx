@@ -7,8 +7,8 @@ import Seasons from '@/app/components/Seasons';
 import Similar from '@/app/components/Similars';
 import { TvShow, TvShowDetails } from '@/app/types/TvShow';
 import TvProviders from '@/app/components/TvProvider';
-import { REVALIDATE, fetcher, getApiUrl } from '@/app/utils';
-import { List } from '@/app/types/Api';
+import { REVALIDATE, getApiUrl } from '@/app/utils';
+import { getLatest, getPopulars, getTopRated } from '@/app/services';
 
 interface Props {
   params: {
@@ -19,7 +19,21 @@ interface Props {
 export const revalidate = REVALIDATE.ONE_DAY;
 
 export async function generateStaticParams() {
-  const { results }: List<TvShow> = await fetcher(getApiUrl('/discover/tv', false));
+  const topRated = getTopRated();
+  const latest = getLatest();
+  const populars = getPopulars();
+
+  const [
+    topRatedResponse,
+    latestResponse,
+    popularsResponse,
+  ] = await Promise.all([topRated, latest, populars]);
+
+  const results: TvShow[] = [
+    ...topRatedResponse.results,
+    ...latestResponse.results,
+    ...popularsResponse.results,
+  ];
 
   return results.map((show) => ({
     id: show.id.toString(),
