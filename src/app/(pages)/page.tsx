@@ -1,10 +1,12 @@
 // eslint-disable-next-line import/extensions
+import { Suspense } from 'react';
 import GenreList from '../components/GenreList';
 import Latest from '../components/Latests';
 import Populars from '../components/Populars';
 import SearchBar from '../components/SearchBar';
 import TopRated from '../components/TopRated';
 import { REVALIDATE } from '../utils';
+import TvListLoader from '../loaders/TvListLoader';
 
 export const revalidate = REVALIDATE.ONE_DAY;
 
@@ -15,12 +17,21 @@ function Homepage() {
         {/* @ts-expect-error Server Component */}
         <GenreList />
       </SearchBar>
-      {/* @ts-expect-error Server Component */}
-      <Latest />
-      {/* @ts-expect-error Server Component */}
-      <Populars />
-      {/* @ts-expect-error Server Component */}
-      <TopRated />
+
+      <Suspense fallback={<TvListLoader />}>
+        {/* @ts-expect-error Server Component */}
+        <Latest />
+      </Suspense>
+
+      <Suspense fallback={<TvListLoader />}>
+        {/* @ts-expect-error Server Component */}
+        <Populars />
+      </Suspense>
+
+      <Suspense fallback={<TvListLoader />}>
+        {/* @ts-expect-error Server Component */}
+        <TopRated />
+      </Suspense>
     </div>
   );
 }

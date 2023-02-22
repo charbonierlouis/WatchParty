@@ -33,3 +33,7 @@ export const REVALIDATE = {
   ONE_HOUR: 60 * 60,
   ONE_DAY: 60 * 60 * 24,
 };
+
+export const sleep = (ms: number) => new Promise((resolve) => {
+  setTimeout(resolve, ms);
+});
