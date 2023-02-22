@@ -36,12 +36,14 @@ function SimpleCard({
           )}
         </p>
         <div className="card-actions justify-between">
-          <SaveToListButton
-            addToListText=""
-            removeToListText=""
-            item={item}
-            className="btn-ghost"
-          />
+          <div className="tooltip" data-tip="Ajouter à ma liste">
+            <SaveToListButton
+              addToListText=""
+              removeToListText=""
+              item={item}
+              className="btn-ghost"
+            />
+          </div>
           <Link
             href={`/tv/${item.id}`}
             className="btn btn-primary"
