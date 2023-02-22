@@ -5,10 +5,12 @@ import SaveToListButton from './SaveToListButton';
 
 interface Props {
   item: TvShow;
+  priority?: boolean;
 }
 
 function SimpleCard({
   item,
+  priority,
 }: Props) {
   return (
     <div className="card w-full h-full bg-base-300 shadow-xl md:max-w-[350px]">
@@ -19,6 +21,7 @@ function SimpleCard({
           width={250}
           height={250}
           className="w-full"
+          priority={priority}
         />
       </figure>
       <div className="card-body">

@@ -19,7 +19,7 @@ function TvList({
     <div className="flex flex-col gap-5 w-full">
       <h2 className="text-2xl">{title}</h2>
       <div className="flex overflow-x-auto gap-5">
-        {filtred.map((item) => (
+        {filtred.map((item, i) => (
           <div
             key={item.id}
             className="min-w-[300px]"
@@ -27,6 +27,7 @@ function TvList({
             <SimpleCard
               key={item.id}
               item={item}
+              priority={i === 0}
             />
           </div>
         ))}
