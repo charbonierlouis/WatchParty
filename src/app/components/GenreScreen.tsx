@@ -33,10 +33,11 @@ function GenreScreen({
     <div className="flex flex-col gap-5">
       <h1 className="text-4xl">{title}</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {tvShow.filter((e) => !!e.overview && e.poster_path).map((e) => (
+        {tvShow.filter((e) => !!e.overview && e.poster_path).map((e, i) => (
           <SimpleCard
             key={e.id}
             item={e}
+            priority={i === 0}
           />
         ))}
       </div>

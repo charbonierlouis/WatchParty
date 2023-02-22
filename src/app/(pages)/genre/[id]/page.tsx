@@ -1,7 +1,7 @@
 import GenreScreen from '@/app/components/GenreScreen';
-import { List } from '@/app/types/Api';
-import { Genre, TvShow } from '@/app/types/TvShow';
-import { REVALIDATE, fetcher, getApiUrl } from '@/app/utils';
+import { getByGenre, getGenres } from '@/app/services';
+import { Genre } from '@/app/types/TvShow';
+import { REVALIDATE } from '@/app/utils';
 
 interface Props {
   params: {
@@ -14,7 +14,7 @@ export const revalidate = REVALIDATE.ONE_DAY;
 export async function generateStaticParams() {
   const { genres }: {
     genres: Genre[]
-  } = await fetcher(getApiUrl('/genre/tv/list', false));
+  } = await getGenres();
 
   return genres.map((genre) => ({
     id: genre.id.toString(),
@@ -24,22 +24,10 @@ export async function generateStaticParams() {
 async function GenrePage({
   params,
 }: Props) {
-  const res = await fetch(getApiUrl(`/discover/tv?page=1&with_genres=${params.id}`, true), {
-    next: {
-      revalidate: REVALIDATE.ONE_DAY,
-    },
-  });
+  const { results, total_pages: totalPages } = await getByGenre(params.id);
 
-  const resList = await fetch(getApiUrl('/genre/tv/list', false), {
-    next: {
-      revalidate: REVALIDATE.ONE_DAY,
-    },
-  });
+  const listResult = await getGenres();
 
-  const { results, total_pages: totalPages }: List<TvShow> = await res.json();
-  const listResult: {
-    genres: Genre[]
-  } = await resList.json();
   const title = listResult?.genres?.find((e) => e.id === Number(params.id))?.name;
 
   if (!title) throw new Error('Not Found');

@@ -8,9 +8,12 @@ import Similar from '@/app/components/Similars';
 import { TvShow, TvShowDetails } from '@/app/types/TvShow';
 import TvProviders from '@/app/components/TvProvider';
 import { REVALIDATE, getApiUrl } from '@/app/utils';
-import { getLatest, getPopulars, getTopRated } from '@/app/services';
+import {
+  getByGenre, getGenres, getLatest, getPopulars, getTopRated,
+} from '@/app/services';
 import { Suspense } from 'react';
 import TvListLoader from '@/app/loaders/TvListLoader';
+import _ from 'lodash';
 
 interface Props {
   params: {
@@ -21,6 +24,10 @@ interface Props {
 export const revalidate = REVALIDATE.ONE_DAY;
 
 export async function generateStaticParams() {
+  const { genres } = await getGenres();
+
+  const byGenre = genres.map((genre) => getByGenre(genre.id));
+
   const topRated = getTopRated();
   const latest = getLatest();
   const populars = getPopulars();
@@ -29,12 +36,16 @@ export async function generateStaticParams() {
     topRatedResponse,
     latestResponse,
     popularsResponse,
-  ] = await Promise.all([topRated, latest, populars]);
+    ...rest
+  ] = await Promise.all([topRated, latest, populars, ...byGenre]);
+
+  const byGenreResult = _.flatMap(rest, (r) => r.results);
 
   const results: TvShow[] = [
     ...topRatedResponse.results,
     ...latestResponse.results,
     ...popularsResponse.results,
+    ...byGenreResult,
   ];
 
   return results.map((show) => ({
