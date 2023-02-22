@@ -8,7 +8,7 @@ import { TvShow, TvShowDetails } from '@/app/types/TvShow';
 import TvProviders from '@/app/components/TvProvider';
 import { REVALIDATE, getApiUrl } from '@/app/utils';
 import {
-  getByGenre, getGenres, getLatest, getPopulars, getSeason, getTopRated,
+  getByGenre, getGenres, getLatest, getPopulars, getTopRated,
 } from '@/app/services';
 import { Suspense } from 'react';
 import TvListLoader from '@/app/loaders/TvListLoader';
@@ -16,6 +16,7 @@ import _ from 'lodash';
 import Banner from '@/app/components/Banner';
 import Seasons from '@/app/components/Seasons';
 import Container from '@/app/components/Container';
+import SeasonsLoader from '@/app/loaders/SeasonsLoader';
 
 interface Props {
   params: {
@@ -65,10 +66,6 @@ async function TvPage({
   });
   const item: TvShowDetails = await res.json();
 
-  const seasonsRequest = item.seasons?.map((season) => getSeason(item.id, season.season_number));
-
-  const seasons = await Promise.all(seasonsRequest);
-
   return (
     <div className="flex flex-col gap-5">
       <Banner
@@ -111,9 +108,20 @@ async function TvPage({
         </>
       </Banner>
       <Container>
-        <Seasons
-          seasons={seasons}
-        />
+
+        <Suspense fallback={(
+          <div className="flex flex-col gap-5">
+            {item.seasons.map(() => (
+              <SeasonsLoader />
+            ))}
+          </div>
+          )}
+        >
+          {/* @ts-expect-error Server Component */}
+          <Seasons
+            tvShow={item}
+          />
+        </Suspense>
 
         <Suspense fallback={<TvListLoader />}>
           {/* @ts-expect-error Server Component */}

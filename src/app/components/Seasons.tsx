@@ -1,16 +1,23 @@
-'use client';
-
 import Image from 'next/image';
-import { SeasonDetails } from '../types/TvShow';
-import EpisodeCard from './EpisodeCard';
+import dynamic from 'next/dynamic';
+import { TvShowDetails } from '../types/TvShow';
+import { getSeason } from '../services';
+
+const DynamicSeasonContent = dynamic(() => import('./SeasonContent'));
 
 interface Props {
-  seasons: SeasonDetails[];
+  tvShow: TvShowDetails;
 }
 
-function Season({
-  seasons,
+async function Season({
+  tvShow,
 }: Props) {
+  const seasonsRequest = tvShow.seasons?.map(
+    (season) => getSeason(tvShow.id, season.season_number),
+  );
+
+  const seasons = await Promise.all(seasonsRequest);
+
   const filtredSeason = seasons.filter((e) => !!e.poster_path);
 
   return (
@@ -52,15 +59,9 @@ function Season({
               </div>
             </div>
             <div className="collapse-content">
-              <div className="py-5 flex flex-col gap-5">
-                <div className="divider" />
-                {filtredEpisode.map((episode) => (
-                  <EpisodeCard
-                    key={episode.id}
-                    item={episode}
-                  />
-                ))}
-              </div>
+              <DynamicSeasonContent
+                episodes={season.episodes}
+              />
             </div>
           </div>
         );
