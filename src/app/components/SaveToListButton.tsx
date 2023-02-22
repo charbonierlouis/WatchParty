@@ -38,6 +38,7 @@ function SaveToListButton({
         className={styles}
         type="button"
         onClick={handleClick}
+        aria-label="Ajouter à ma liste"
       >
         <GoEyeClosed size={16} />
         {removeToListText}
