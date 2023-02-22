@@ -11,16 +11,12 @@ export default function RootLayout({
   children: ReactNode
 }) {
   return (
-    <html lang="en" data-theme="dark">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
+    <html lang="fr" data-theme="dark">
       <head />
       <body>
         <ListProvider>
           <NavBar />
-          <div className="p-5">
+          <div>
             {children}
           </div>
         </ListProvider>

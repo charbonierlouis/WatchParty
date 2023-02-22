@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { Episode } from '../types/TvShow';
@@ -27,7 +25,7 @@ function EpisodeCard({
       </Modal>
       <label htmlFor={`modal-${item.id}`} className="w-full">
         <div
-          className="block lg:hidden card w-full bg-base-300 shadow-xl w-full"
+          className="block lg:hidden card w-full bg-base-100 shadow-xl w-full"
         >
           <figure>
             <Image
@@ -44,7 +42,7 @@ function EpisodeCard({
           </div>
         </div>
         <div
-          className="hidden lg:inline-flex card card-side bg-base-300 shadow-xl w-full"
+          className="hidden lg:inline-flex card card-side bg-base-100 shadow-xl w-full"
         >
           <figure className="min-w-[250px]">
             <Image

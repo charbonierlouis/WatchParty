@@ -22,11 +22,13 @@ export interface Season {
   id: number;
   name: string;
   season_number: number;
+  air_date: string;
+  poster_path: string;
+  episodes: Episode[];
+  overview: string;
 }
 
 export interface SeasonDetails extends Season {
-  poster_path: string;
-  episodes: Episode[];
 }
 
 export interface TvShow {
@@ -40,6 +42,7 @@ export interface TvShow {
 export interface TvShowDetails extends TvShow {
   genres: Genre[];
   seasons: Season[];
+  backdrop_path: string;
 }
 
 export interface Providers {
@@ -47,6 +50,7 @@ export interface Providers {
     flatrate?: {
       logo_path: string;
       provider_name: string;
+      display_priority: number;
     }[];
   };
 }

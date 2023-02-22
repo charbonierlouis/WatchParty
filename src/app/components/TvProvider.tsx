@@ -22,23 +22,24 @@ async function TvProviders({
   if (!localProviders?.flatrate?.length) {
     return null;
   }
+
+  const provider = localProviders.flatrate.sort(
+    (a, b) => a.display_priority - b.display_priority,
+  )[0];
   return (
-    <ul className="flex gap-2">
-      {localProviders.flatrate.map((provider) => (
-        <li
-          key={provider.provider_name}
-          className="tooltip w-fit"
-          data-tip={provider.provider_name}
-        >
-          <Image
-            src={`${process.env.NEXT_PUBLIC_MEDIA}${provider.logo_path}`}
-            alt={provider.provider_name}
-            width={40}
-            height={40}
-          />
-        </li>
-      ))}
-    </ul>
+    <div className="group bg-gradient-to-b text-white from-primary to-primary-focus bottom-0 w-full flex gap-3 justify-center py-3 items-center text-left rounded-b-xl hover:cursor-pointer">
+      <Image
+        src={`${process.env.NEXT_PUBLIC_MEDIA}${provider.logo_path}`}
+        alt={provider.provider_name}
+        width={40}
+        height={40}
+        className="rounded"
+      />
+      <div className="flex flex-col">
+        <span>Disponible en streaming</span>
+        <span className="font-bold group-hover:underline">Regarder maintenant</span>
+      </div>
+    </div>
   );
 }
 

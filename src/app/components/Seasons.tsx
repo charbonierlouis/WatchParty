@@ -1,57 +1,72 @@
-/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-
 'use client';
 
-import { useState } from 'react';
-import { Season, TvShowDetails } from '../types/TvShow';
-import Episodes from './Episodes';
+import Image from 'next/image';
+import { SeasonDetails } from '../types/TvShow';
+import EpisodeCard from './EpisodeCard';
 
 interface Props {
-  tvShowId: number;
-  seasons: TvShowDetails['seasons'];
+  seasons: SeasonDetails[];
 }
 
-function Seasons({ tvShowId, seasons }: Props) {
-  const [selected, setSelected] = useState<Season | null>(seasons[0] || null);
-
-  const handleClick = (e: Season) => {
-    setSelected(e);
-  };
+function Season({
+  seasons,
+}: Props) {
+  const filtredSeason = seasons.filter((e) => !!e.poster_path);
 
   return (
-    <>
-      <div className="dropdown">
-        <label tabIndex={0} className="btn m-1">
-          {selected?.name}
-        </label>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-        >
-          {seasons?.map((e) => (
-            <li key={e.id}>
-              <button
-                type="button"
-                onClick={() => handleClick(e)}
-                className={`${selected?.id === e.id ? 'bg-primary' : ''}`}
-              >
-                {e.name}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      {!!selected && (
-        <div>
-          <Episodes
-            tvShowId={tvShowId}
-            seasonNumber={selected?.season_number}
-          />
-        </div>
-      )}
-    </>
+    <div className="flex flex-col gap-5">
+      {filtredSeason.map((season) => {
+        const filtredEpisode = season.episodes.filter((e) => !!e.still_path);
+        return (
+          <div key={season.id} className="collapse rounded-lg bg-base-300 shadow-xl">
+            <input type="checkbox" className="peer" />
+            <div className="collapse-title flex gap-5 p-0 items-center">
+              {season.poster_path && (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_MEDIA}${season.poster_path}`}
+                alt={season.name}
+                width={250}
+                height={350}
+                className="w-[150px]"
+              />
+              )}
+              <div className="flex flex-col gap-2">
+                <h2 className="text-xl font-semibold">
+                  {season.name}
+                </h2>
+                <p className="text-sm">
+                  {season.air_date}
+                  {' '}
+                  |
+                  {' '}
+                  {filtredEpisode.length}
+                  {' '}
+                  épisodes
+                </p>
+                <p className="hidden lg:block">
+                  {season.overview}
+                </p>
+                <p className="block lg:hidden">
+                  {season.overview.substring(0, 100)}
+                </p>
+              </div>
+            </div>
+            <div className="collapse-content">
+              <div className="py-5 flex flex-col gap-5">
+                <div className="divider" />
+                {filtredEpisode.map((episode) => (
+                  <EpisodeCard
+                    key={episode.id}
+                    item={episode}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
-export default Seasons;
+export default Season;

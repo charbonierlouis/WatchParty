@@ -1,3 +1,4 @@
+import Container from '@/app/components/Container';
 import GenreScreen from '@/app/components/GenreScreen';
 import { getByGenre, getGenres } from '@/app/services';
 import { Genre } from '@/app/types/TvShow';
@@ -33,12 +34,14 @@ async function GenrePage({
   if (!title) throw new Error('Not Found');
 
   return (
-    <GenreScreen
-      items={results}
-      title={title}
-      totalPages={totalPages}
-      genreId={Number(params.id)}
-    />
+    <Container>
+      <GenreScreen
+        items={results}
+        title={title}
+        totalPages={totalPages}
+        genreId={Number(params.id)}
+      />
+    </Container>
   );
 }
 
