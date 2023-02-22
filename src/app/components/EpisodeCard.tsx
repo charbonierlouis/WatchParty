@@ -25,7 +25,6 @@ function EpisodeCard({
           episodeNumber={item.episode_number}
         />
       </Modal>
-      <input type="checkbox" id={`modal-${item.id}`} className="modal-toggle" />
       <label htmlFor={`modal-${item.id}`} className="w-full">
         <div
           className="block lg:hidden card w-full bg-base-300 shadow-xl w-full"
@@ -34,8 +33,8 @@ function EpisodeCard({
             <Image
               src={`${process.env.NEXT_PUBLIC_MEDIA}${item.still_path}`}
               alt={item.name}
-              width={250}
-              height={250}
+              width={256}
+              height={144}
               className="w-full"
             />
           </figure>

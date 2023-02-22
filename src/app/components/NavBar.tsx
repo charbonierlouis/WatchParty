@@ -18,7 +18,11 @@ function NavBar() {
         </Link>
       </div>
       <div className="flex-none">
-        <Link href="/list" className="btn btn-ghost hover:text-accent">
+        <Link
+          href="/list"
+          className="btn btn-ghost hover:text-accent"
+          aria-label="Voir ma liste"
+        >
           <GoEye size={16} />
         </Link>
       </div>

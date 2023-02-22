@@ -9,17 +9,17 @@ interface Props {
 
 function Rate({ value, id }: Props) {
   const rate = _.round(value / 2);
-  const tab = _.fill(Array(5), rate);
+  const tab = [1, 2, 3, 4, 5];
   return (
     <div className="rating">
-      {tab.map((e, i) => (
+      {tab.map((e) => (
         <input
           key={`${id}-${e}`}
           id={`${id}-${e}`}
           type="radio"
           name="rating-2"
-          className="mask mask-star-2 bg-primary"
-          checked={i === 3}
+          className="mask mask-star-2 bg-primary w-[48px] h-[48px] lg:w-[24px] lg:h-[24px]"
+          checked={e === rate}
           onChange={() => {}}
         />
       ))}

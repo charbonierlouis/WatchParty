@@ -19,8 +19,12 @@ function Episodes({
   if (isLoading) {
     return (
       <div className="flex flex-col gap-4">
-        { Array(10).fill(true).map(() => (
-          <div className="w-full h-[196px] card card-side bg-base-300 shadow-xl animate-pulse">
+        { Array(10).fill('loader').map((e, i) => (
+          <div
+            // eslint-disable-next-line react/no-array-index-key
+            key={`${e}-${i}`}
+            className="w-full h-[196px] card card-side bg-base-300 shadow-xl animate-pulse"
+          >
             <div className="w-[250px] h-full bg-base-200" />
           </div>
         ))}
