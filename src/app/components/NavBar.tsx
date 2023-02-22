@@ -20,7 +20,7 @@ function NavBar() {
       <div className="flex-none">
         <Link
           href="/list"
-          className="btn btn-ghost hover:text-accent"
+          className="btn btn-ghost hover:btn-secondary"
           aria-label="Voir ma liste"
         >
           <GoEye size={16} />

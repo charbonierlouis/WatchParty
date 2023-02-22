@@ -99,7 +99,7 @@ async function TvPage({
               <p className="text-left text-white">{item.overview}</p>
             </div>
             <SaveToListButton
-              className="w-fit flex justify-center gap-2 secondary"
+              className="w-fit flex justify-center gap-2 btn-secondary"
               item={item}
               addToListText="Ajouter à ma liste"
               removeToListText="Retirer de ma liste"

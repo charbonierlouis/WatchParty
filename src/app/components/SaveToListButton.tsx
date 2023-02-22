@@ -30,7 +30,7 @@ function SaveToListButton({
     }
   }, [item, saveTvShow, canSave, removeTvShow]);
 
-  const styles = useMemo(() => `btn btn-accent ${className}${!canSave ? ' btn-outline' : ''}`, [canSave, className]);
+  const styles = useMemo(() => `btn ${className}${!canSave ? ' btn-outline' : ''}`, [canSave, className]);
 
   if (!canSave) {
     return (
