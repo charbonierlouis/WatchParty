@@ -1,11 +1,13 @@
+/* eslint-disable no-unused-vars */
 import {
   getByGenre, getGenres, getLatest, getPopulars, getSeason, getTopRated, getTvById,
 } from '@/app/services';
 import { TvShow, TvShowDetails } from '@/app/types/TvShow';
-import { REVALIDATE } from '@/app/utils';
+import { REVALIDATE, getApiUrl } from '@/app/utils';
 import _ from 'lodash';
 import Link from 'next/link';
-import Season from './components/Season';
+import { HiChevronLeft } from 'react-icons/hi';
+import SeasonCard from '../components/Season';
 
 export const revalidate = REVALIDATE.ONE_DAY;
 
@@ -45,7 +47,7 @@ interface Props {
   }
 }
 
-async function TvPage({
+async function SeasonsPage({
   params,
 }: Props) {
   const item: TvShowDetails = await getTvById(Number(params.id));
@@ -54,35 +56,28 @@ async function TvPage({
     throw new Error('TvShow not found');
   }
 
-  const defaultSeason = item.seasons?.length ? item.seasons[item.seasons.length - 1] : null;
-  const seasonDetail = await getSeason(Number(params.id), defaultSeason?.season_number || 0);
+  const detailsRequest = item.seasons.map((e) => getSeason(Number(params.id), e.season_number));
+  const details = await Promise.all(detailsRequest);
 
-  if (!seasonDetail) {
-    throw new Error('Season not found');
+  if (!details?.length) {
+    throw new Error('Seasons not found');
   }
 
   return (
-    <div className="w-full">
-      <div className="w-full flex flex-col gap-5">
-        {item.seasons.length && (
-          <>
-            <Season
-              season={seasonDetail}
-              tvId={item.id}
-            />
-            {item.seasons?.length > 1 && (
-            <Link
-              href={`/tv/${params.id}/seasons`}
-              className="btn btn-base w-fit"
-            >
-              Voir toutes les saisons
-            </Link>
-            )}
-          </>
-        )}
-      </div>
+    <div className="flex flex-col gap-5">
+      <Link href={`/tv/${params.id}`} className="hover:underline flex gap-2">
+        <HiChevronLeft size={32} />
+        <h2 className="text-2xl">{item.name}</h2>
+      </Link>
+      {details.sort((a, b) => b.season_number - a.season_number).map((season) => (
+        <SeasonCard
+          key={season.id}
+          tvId={Number(params.id)}
+          season={season}
+        />
+      ))}
     </div>
   );
 }
 
-export default TvPage;
+export default SeasonsPage;

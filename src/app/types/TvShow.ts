@@ -24,11 +24,11 @@ export interface Season {
   season_number: number;
   air_date: string;
   poster_path: string;
-  episodes: Episode[];
   overview: string;
 }
 
 export interface SeasonDetails extends Season {
+  episodes: Episode[];
 }
 
 export interface TvShow {

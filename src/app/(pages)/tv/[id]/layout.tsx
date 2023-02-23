@@ -11,6 +11,7 @@ import TvProviders from '@/app/components/TvProvider';
 import TvListLoader from '@/app/loaders/TvListLoader';
 import Banner from '@/app/components/Banner';
 import Container from '@/app/components/Container';
+import Link from 'next/link';
 
 interface Props {
   children: ReactNode;
@@ -54,7 +55,9 @@ export default async function TVLayout({
               <Genres
                 items={item.genres}
               />
-              <h1 className="text-white text-4xl">{item.name}</h1>
+              <Link href={`tv/${params.id}`}>
+                <h1 className="text-white text-4xl hover:underline">{item.name}</h1>
+              </Link>
               <Rate
                 value={item.vote_average}
                 id={item.name}
