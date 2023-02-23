@@ -22,7 +22,7 @@ function TvList({
         {filtred.map((item, i) => (
           <div
             key={item.id}
-            className="min-w-[300px]"
+            className="w-[150px] min-w-[150px]"
           >
             <SimpleCard
               key={item.id}

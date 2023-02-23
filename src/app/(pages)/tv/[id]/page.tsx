@@ -123,6 +123,8 @@ async function TvPage({
           />
         </Suspense>
 
+        <div className="divider" />
+
         <Suspense fallback={<TvListLoader />}>
           {/* @ts-expect-error Server Component */}
           <Similar
