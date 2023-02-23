@@ -1,12 +1,10 @@
+import NotFound from '@/app/components/Errors/NotFound';
 import {
   getByGenre, getGenres, getLatest, getPopulars, getSeason, getTopRated, getTvById,
 } from '@/app/services';
 import { TvShow } from '@/app/types/TvShow';
 import _ from 'lodash';
 import Image from 'next/image';
-import Link from 'next/link';
-import { HiChevronLeft } from 'react-icons/hi';
-
 // eslint-disable-next-line import/prefer-default-export
 export async function generateStaticParams() {
   const { genres } = await getGenres();
@@ -55,12 +53,11 @@ async function SeasonsPage({
   params,
 }: Props) {
   const season = await getSeason(Number(params.id), Number(params.number));
+
+  if (!season.id) return <NotFound />;
+
   return (
-    <div className="flex flex-col gap-5">
-      <Link href={`/tv/${params.id}/seasons`} className="flex gap-2 hover:underline">
-        <HiChevronLeft size={32} />
-        <h2 className="text-2xl">{season.name}</h2>
-      </Link>
+    <>
       {season.episodes.map((episode) => (
         <div className="card card-side bg-base-300 shadow-xl">
           <figure>
@@ -78,7 +75,7 @@ async function SeasonsPage({
           </div>
         </div>
       ))}
-    </div>
+    </>
   );
 }
 
