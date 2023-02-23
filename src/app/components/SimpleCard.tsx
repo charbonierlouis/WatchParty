@@ -14,7 +14,7 @@ function SimpleCard({
   return (
     <Link href={`/tv/${item.id}`} className="flex flex-col gap-3 w-full h-full">
       <Image
-        src={`${process.env.NEXT_PUBLIC_MEDIA}${item.poster_path}`}
+        src={`${process.env.NEXT_PUBLIC_MEDIA_SMALL}${item.poster_path}`}
         alt={item.name}
         width={250}
         height={350}
