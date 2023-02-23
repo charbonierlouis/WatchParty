@@ -1,9 +1,14 @@
 'use client';
 
 import Container from '@/app/components/Container';
+import Latest from '@/app/components/Latests';
+import Populars from '@/app/components/Populars';
 import SimpleCard from '@/app/components/SimpleCard';
+import TopRated from '@/app/components/TopRated';
 import { useList } from '@/app/hooks/useList';
+import TvListLoader from '@/app/loaders/TvListLoader';
 import { REVALIDATE } from '@/app/utils';
+import { Suspense } from 'react';
 
 export const revalidate = REVALIDATE.ONE_DAY;
 
@@ -24,6 +29,20 @@ function ListPage() {
           ))}
         </div>
       </div>
+      <Suspense fallback={<TvListLoader />}>
+        {/* @ts-expect-error Server Component */}
+        <Latest />
+      </Suspense>
+
+      <Suspense fallback={<TvListLoader />}>
+        {/* @ts-expect-error Server Component */}
+        <Populars />
+      </Suspense>
+
+      <Suspense fallback={<TvListLoader />}>
+        {/* @ts-expect-error Server Component */}
+        <TopRated />
+      </Suspense>
     </Container>
   );
 }
