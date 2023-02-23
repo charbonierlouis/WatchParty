@@ -1,5 +1,7 @@
 import { List } from '../types/Api';
-import { Genre, SeasonDetails, TvShow, TvShowDetails } from '../types/TvShow';
+import {
+  Genre, SeasonDetails, TvShow, TvShowDetails,
+} from '../types/TvShow';
 import { REVALIDATE, fetcher, getApiUrl } from '../utils';
 
 // eslint-disable-next-line import/prefer-default-export
