@@ -12,7 +12,7 @@ function SimpleCard({
   priority,
 }: Props) {
   return (
-    <Link href={`/tv/${item.id}`} className="flex flex-col gap-3 w-full">
+    <Link href={`/tv/${item.id}`} className="flex flex-col gap-3 w-full h-full">
       <Image
         src={`${process.env.NEXT_PUBLIC_MEDIA}${item.poster_path}`}
         alt={item.name}
