@@ -1,44 +1,44 @@
 import {
-  getByGenre, getGenres, getLatest, getPopulars, getSeason, getTopRated, getTvById,
+  getSeason, getTvById,
 } from '@/app/services';
-import { TvShow, TvShowDetails } from '@/app/types/TvShow';
-import { REVALIDATE } from '@/app/utils';
-import _ from 'lodash';
+import { TvShowDetails } from '@/app/types/TvShow';
 import Link from 'next/link';
 import NotFound from '@/app/components/Errors/NotFound';
 import Season from './components/Season';
 
-export const revalidate = REVALIDATE.ONE_DAY;
+// export const revalidate = REVALIDATE.ONE_DAY;
 
-export async function generateStaticParams() {
-  const { genres } = await getGenres();
+// export async function generateStaticParams() {
+//   const { genres } = await getGenres();
 
-  const byGenre = genres.map((genre) => getByGenre(genre.id));
+//   const byGenre = genres.map((genre) => getByGenre(genre.id));
 
-  const topRated = getTopRated();
-  const latest = getLatest();
-  const populars = getPopulars();
+//   const topRated = getTopRated();
+//   const latest = getLatest();
+//   const populars = getPopulars();
 
-  const [
-    topRatedResponse,
-    latestResponse,
-    popularsResponse,
-    ...rest
-  ] = await Promise.all([topRated, latest, populars, ...byGenre]);
+//   const [
+//     topRatedResponse,
+//     latestResponse,
+//     popularsResponse,
+//     ...rest
+//   ] = await Promise.all([topRated, latest, populars, ...byGenre]);
 
-  const byGenreResult = _.flatMap(rest, (r) => r.results);
+//   const byGenreResult = _.flatMap(rest, (r) => r.results);
 
-  const results: TvShow[] = [
-    ...topRatedResponse.results,
-    ...latestResponse.results,
-    ...popularsResponse.results,
-    ...byGenreResult,
-  ];
+//   const results: TvShow[] = [
+//     ...topRatedResponse.results,
+//     ...latestResponse.results,
+//     ...popularsResponse.results,
+//     ...byGenreResult,
+//   ];
 
-  return results.map((show) => ({
-    id: show.id.toString(),
-  }));
-}
+//   return results.map((show) => ({
+//     id: show.id.toString(),
+//   }));
+// }
+
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: {

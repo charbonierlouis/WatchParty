@@ -1,7 +1,12 @@
+'use client';
+
 import { GoEye } from 'react-icons/go';
+import { FiUser } from 'react-icons/fi';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 function NavBar() {
+  const { data: session } = useSession();
   return (
     <div className="navbar bg-neutral shadow">
       <div className="flex-1">
@@ -18,13 +23,23 @@ function NavBar() {
         </Link>
       </div>
       <div className="flex-none">
-        <Link
-          href="/list"
-          className="btn btn-ghost hover:btn-secondary"
-          aria-label="Voir ma liste"
-        >
-          <GoEye size={16} />
-        </Link>
+        {session ? (
+          <Link
+            href="/list"
+            className="btn btn-ghost hover:btn-secondary"
+            aria-label="Voir ma liste"
+          >
+            <GoEye size={16} />
+          </Link>
+        ) : (
+          <Link
+            href="/api/auth/signin"
+            className="btn btn-ghost hover:btn-secondary"
+            aria-label="Voir ma liste"
+          >
+            <FiUser size={26} />
+          </Link>
+        )}
       </div>
     </div>
   );

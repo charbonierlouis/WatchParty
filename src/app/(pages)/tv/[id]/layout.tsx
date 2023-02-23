@@ -20,6 +20,8 @@ interface Props {
   }
 }
 
+// export const dynamic = 'force-dynamic';
+
 export default async function TVLayout({
   children,
   params,
@@ -64,12 +66,12 @@ export default async function TVLayout({
               />
               <p className="text-left text-white">{item.overview}</p>
             </div>
-            <SaveToListButton
-              className="w-fit flex justify-center gap-2 btn-secondary"
-              item={item}
-              addToListText="Ajouter à ma liste"
-              removeToListText="Retirer de ma liste"
-            />
+            <Suspense fallback={null}>
+              {/* @ts-expect-error Server Component */}
+              <SaveToListButton
+                item={item}
+              />
+            </Suspense>
           </div>
         </>
       </Banner>

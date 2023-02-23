@@ -12,6 +12,7 @@ export const revalidate = REVALIDATE.ONE_DAY;
 function ListPage() {
   return (
     <Container>
+      {/* @ts-expect-error Server Component */}
       <List />
       <Suspense fallback={<TvListLoader />}>
         {/* @ts-expect-error Server Component */}

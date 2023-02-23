@@ -1,11 +1,9 @@
-'use client';
-
 import { ReactNode } from 'react';
 import './globals.css';
 import NavBar from '../components/NavBar';
-import { ListProvider } from '../hooks/useList';
+import Providers from '../hooks/Providers';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: ReactNode
@@ -14,12 +12,12 @@ export default function RootLayout({
     <html lang="fr" data-theme="dark">
       <head />
       <body>
-        <ListProvider>
+        <Providers>
           <NavBar />
           <div>
             {children}
           </div>
-        </ListProvider>
+        </Providers>
       </body>
     </html>
   );
