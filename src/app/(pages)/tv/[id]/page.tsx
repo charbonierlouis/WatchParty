@@ -5,6 +5,7 @@ import { TvShow, TvShowDetails } from '@/app/types/TvShow';
 import { REVALIDATE } from '@/app/utils';
 import _ from 'lodash';
 import Link from 'next/link';
+import NotFound from '@/app/components/Errors/NotFound';
 import Season from './components/Season';
 
 export const revalidate = REVALIDATE.ONE_DAY;
@@ -51,14 +52,14 @@ async function TvPage({
   const item: TvShowDetails = await getTvById(Number(params.id));
 
   if (!item) {
-    throw new Error('TvShow not found');
+    return <NotFound />;
   }
 
   const defaultSeason = item.seasons?.length ? item.seasons[item.seasons.length - 1] : null;
   const seasonDetail = await getSeason(Number(params.id), defaultSeason?.season_number || 0);
 
   if (!seasonDetail) {
-    throw new Error('Season not found');
+    return <NotFound />;
   }
 
   return (
