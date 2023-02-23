@@ -2,7 +2,7 @@
 
 /* eslint-disable import/extensions */
 
-import { ReactNode, useState } from 'react';
+import { FormEventHandler, ReactNode, useState } from 'react';
 import { TvShow } from '../types/TvShow';
 import { List } from '../types/Api';
 import SimpleCard from './SimpleCard';
@@ -24,7 +24,8 @@ function SearchBar({
     setValue(newValue);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
     const result = await fetch(`/api/search/tv/${value}`, {
       next: {
         revalidate: REVALIDATE.ONE_DAY,
@@ -40,7 +41,10 @@ function SearchBar({
         <h2>Trouver une série : </h2>
         <div className="w-full flex justify-center py-5">
           <div className="form-control w-full md:max-w-[450px]">
-            <div className="input-group">
+            <form
+              className="input-group"
+              onSubmit={handleSubmit}
+            >
               <input
                 type="text"
                 placeholder="Search…"
@@ -50,13 +54,12 @@ function SearchBar({
               />
               <button
                 className="btn btn-square btn-primary"
-                type="button"
+                type="submit"
                 aria-label="Rechercher"
-                onClick={handleSubmit}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
               </button>
-            </div>
+            </form>
           </div>
         </div>
         {children}
