@@ -13,8 +13,10 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="alert alert-error opacity-80">
-      <h2>Une erreur est survenu</h2>
+    <div className="p-5">
+      <div className="alert alert-error opacity-80">
+        <h2>Une erreur est survenu</h2>
+      </div>
     </div>
   );
 }
