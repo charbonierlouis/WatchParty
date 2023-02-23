@@ -16,8 +16,8 @@ function SimpleCard({
       <Image
         src={`${process.env.NEXT_PUBLIC_MEDIA_SMALL}${item.poster_path}`}
         alt={item.name}
-        width={250}
-        height={350}
+        width={150}
+        height={225}
         className="w-full h-full object-cover card shadow-xl"
         priority={priority}
       />
