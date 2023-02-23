@@ -1,4 +1,5 @@
 import Container from '@/app/components/Container';
+import NotFound from '@/app/components/Errors/NotFound';
 import GenreScreen from '@/app/components/GenreScreen';
 import { getByGenre, getGenres } from '@/app/services';
 import { Genre } from '@/app/types/TvShow';
@@ -31,7 +32,7 @@ async function GenrePage({
 
   const title = listResult?.genres?.find((e) => e.id === Number(params.id))?.name;
 
-  if (!title) throw new Error('Not Found');
+  if (!title) return <NotFound />;
 
   return (
     <Container>
