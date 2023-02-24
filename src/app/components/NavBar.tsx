@@ -1,12 +1,10 @@
-'use client';
-
 import { GoEye } from 'react-icons/go';
 import { FiUser } from 'react-icons/fi';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { getSession } from '../services';
 
-function NavBar() {
-  const { data: session } = useSession();
+async function NavBar() {
+  const session = await getSession();
   return (
     <div className="navbar bg-neutral shadow">
       <div className="flex-1">
