@@ -1,46 +1,46 @@
 import NotFound from '@/app/components/Errors/NotFound';
 import {
-  getByGenre, getGenres, getLatest, getPopulars, getSeason, getTopRated, getTvById,
+  getSeason,
 } from '@/app/services';
-import { TvShow } from '@/app/types/TvShow';
-import _ from 'lodash';
 import Image from 'next/image';
-// eslint-disable-next-line import/prefer-default-export
-export async function generateStaticParams() {
-  const { genres } = await getGenres();
 
-  const byGenre = genres.map((genre) => getByGenre(genre.id));
+// export async function generateStaticParams() {
+//   const { genres } = await getGenres();
 
-  const topRated = getTopRated();
-  const latest = getLatest();
-  const populars = getPopulars();
+//   const byGenre = genres.map((genre) => getByGenre(genre.id));
 
-  const [
-    topRatedResponse,
-    latestResponse,
-    popularsResponse,
-    ...rest
-  ] = await Promise.all([topRated, latest, populars, ...byGenre]);
+//   const topRated = getTopRated();
+//   const latest = getLatest();
+//   const populars = getPopulars();
 
-  const byGenreResult = _.flatMap(rest, (r) => r.results);
+//   const [
+//     topRatedResponse,
+//     latestResponse,
+//     popularsResponse,
+//     ...rest
+//   ] = await Promise.all([topRated, latest, populars, ...byGenre]);
 
-  const results: TvShow[] = [
-    ...topRatedResponse.results,
-    ...latestResponse.results,
-    ...popularsResponse.results,
-    ...byGenreResult,
-  ];
+//   const byGenreResult = _.flatMap(rest, (r) => r.results);
 
-  const tvRequest = results.map((e) => getTvById(e.id));
-  const tv = await Promise.all(tvRequest);
+//   const results: TvShow[] = [
+//     ...topRatedResponse.results,
+//     ...latestResponse.results,
+//     ...popularsResponse.results,
+//     ...byGenreResult,
+//   ];
 
-  const params = _.flatMap(tv, (e) => e.seasons.map((season) => ({
-    id: e.id.toString(),
-    number: season.season_number.toString(),
-  })));
+//   const tvRequest = results.map((e) => getTvById(e.id));
+//   const tv = await Promise.all(tvRequest);
 
-  return params;
-}
+//   const params = _.flatMap(tv, (e) => e.seasons.map((season) => ({
+//     id: e.id.toString(),
+//     number: season.season_number.toString(),
+//   })));
+
+//   return params;
+// }
+
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: {
